@@ -1,8 +1,20 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import Dashboard from "./pages/Dashboard"
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+})
+
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello World</h1>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Dashboard />
+    </QueryClientProvider>
   )
 }
 
