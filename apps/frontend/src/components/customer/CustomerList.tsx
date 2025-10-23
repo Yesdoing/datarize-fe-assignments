@@ -1,14 +1,15 @@
 import { useState } from 'react'
 
 import type { SortOrder } from '@/apis/customer'
-import { CustomerSearchBar } from '@/components/customer/CustomerSearchBar'
-import { CustomerTable } from '@/components/customer/CustomerTable'
+import CustomerSearchBar from '@/components/customer/CustomerSearchBar'
+import CustomerTable from '@/components/customer/CustomerTable'
+import CustomerDetailModal from '@/components/customer/CustomerDetailModal'
 import { useCustomers } from '@/hooks/useCustomers'
 import { Spinner } from '@/components/ui/Spinner'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 
-export const CustomerList = () => {
+const CustomerList = () => {
   const [searchName, setSearchName] = useState('')
   const [sortBy, setSortBy] = useState<SortOrder>(undefined)
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
@@ -45,6 +46,14 @@ export const CustomerList = () => {
           />
         )}
       </div>
+
+      {selectedCustomerId && (
+        <CustomerDetailModal
+          customerId={selectedCustomerId}
+          open={!!selectedCustomerId}
+          onClose={() => setSelectedCustomerId(null)}
+        />
+      )}
     </div>
   )
 }

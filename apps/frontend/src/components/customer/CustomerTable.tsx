@@ -21,7 +21,7 @@ interface CustomerTableProps {
   onCustomerClick: (customerId: number) => void
 }
 
-export const CustomerTable = ({ customers, sortBy, onSortChange, onCustomerClick }: CustomerTableProps) => {
+const CustomerTable = ({ customers, sortBy, onSortChange, onCustomerClick }: CustomerTableProps) => {
   const handleSortClick = () => {
     if (!sortBy) {
       onSortChange('desc')
@@ -102,3 +102,5 @@ export const CustomerTable = ({ customers, sortBy, onSortChange, onCustomerClick
     </div>
   )
 }
+
+export default CustomerTable;

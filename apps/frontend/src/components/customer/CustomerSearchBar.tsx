@@ -8,7 +8,7 @@ interface CustomerSearchBarProps {
   onSearch: (name: string) => void
 }
 
-export const CustomerSearchBar = ({ onSearch }: CustomerSearchBarProps) => {
+const CustomerSearchBar = ({ onSearch }: CustomerSearchBarProps) => {
   const [input, setInput] = useState('')
   const debouncedValue = useDebounce(input, 300)
 
@@ -30,3 +30,5 @@ export const CustomerSearchBar = ({ onSearch }: CustomerSearchBarProps) => {
     </div>
   )
 }
+
+export default CustomerSearchBar;
