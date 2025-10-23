@@ -6,8 +6,7 @@ import CustomerTable from '@/components/customer/CustomerTable'
 import CustomerDetailModal from '@/components/customer/CustomerDetailModal'
 import { useCustomers } from '@/hooks/useCustomers'
 import { Spinner } from '@/components/ui/Spinner'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
-import { Button } from '@/components/ui/Button'
+import { Alert, AlertTitle } from '@/components/ui/Alert' 
 
 /**
  * 고객 목록 컴포넌트
@@ -22,7 +21,7 @@ const CustomerList = () => {
   const [sortBy, setSortBy] = useState<SortOrder>(undefined)
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null)
 
-  const { data, isLoading, error, refetch } = useCustomers({
+  const { data, isLoading, error } = useCustomers({
     sortBy,
     name: searchName || undefined,
   })
@@ -31,17 +30,18 @@ const CustomerList = () => {
     <div className="space-y-4">
       <CustomerSearchBar onSearch={setSearchName} />
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        {isLoading && <Spinner />}
+      <div className="bg-white rounded-lg">
+        {isLoading && (
+          <div className="flex items-center justify-center min-h-[400px]">
+            <Spinner className="size-8" />
+          </div>
+        )}
 
         {error && (
           <Alert
             variant="destructive"
           >
             <AlertTitle>고객 목록을 불러오는데 실패했습니다</AlertTitle>
-            <AlertDescription>
-              고객 목록을 불러오는데 실패했습니다. <Button onClick={() => refetch()}>다시 시도</Button>
-            </AlertDescription>
           </Alert>
         )}
 
