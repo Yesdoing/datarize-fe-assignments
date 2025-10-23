@@ -9,6 +9,14 @@ import { Spinner } from '@/components/ui/Spinner'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 
+/**
+ * 고객 목록 컴포넌트
+ *
+ * 검색, 정렬, 상세 모달 기능을 포함한 고객 목록을 표시합니다.
+ * - 이름 검색 (Debounce 적용)
+ * - 총 구매 금액 기준 정렬
+ * - 고객 클릭 시 상세 구매 내역 모달 표시
+ */
 const CustomerList = () => {
   const [searchName, setSearchName] = useState('')
   const [sortBy, setSortBy] = useState<SortOrder>(undefined)

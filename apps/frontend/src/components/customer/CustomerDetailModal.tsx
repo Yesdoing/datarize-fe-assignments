@@ -19,10 +19,19 @@ interface CustomerDetailModalProps {
   onClose: () => void
 }
 
+/**
+ * 고객 구매 내역 상세 모달
+ *
+ * 선택한 고객의 구매 내역을 모달로 표시합니다.
+ * - 총 구매 횟수 및 총 구매 금액 요약
+ * - 개별 구매 내역 목록 (상품 이미지, 이름, 날짜, 수량, 가격)
+ */
 const CustomerDetailModal = ({ customerId, open, onClose }: CustomerDetailModalProps) => {
   const { data, isLoading, error, refetch } = useCustomerPurchases(customerId)
 
+  // 총 구매 금액 계산
   const totalAmount = data?.reduce((sum, purchase) => sum + purchase.price, 0) ?? 0
+  // 총 구매 횟수 계산 (수량의 합)
   const totalQuantity = data?.reduce((sum, purchase) => sum + purchase.quantity, 0) ?? 0
 
   return (

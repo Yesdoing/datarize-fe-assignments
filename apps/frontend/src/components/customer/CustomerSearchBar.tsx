@@ -8,6 +8,12 @@ interface CustomerSearchBarProps {
   onSearch: (name: string) => void
 }
 
+/**
+ * 고객 이름 검색 입력 컴포넌트
+ *
+ * Debounce를 적용하여 입력 후 300ms 대기 후 검색을 실행합니다.
+ * 이를 통해 타이핑 중 불필요한 API 호출을 방지합니다.
+ */
 const CustomerSearchBar = ({ onSearch }: CustomerSearchBarProps) => {
   const [input, setInput] = useState('')
   const debouncedValue = useDebounce(input, 300)

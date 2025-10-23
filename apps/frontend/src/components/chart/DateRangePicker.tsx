@@ -8,7 +8,17 @@ interface DateRangePickerProps {
   onChange: (value: { from: string; to: string }) => void
 }
 
+/**
+ * 날짜 범위 선택 컴포넌트
+ *
+ * 시작 날짜와 종료 날짜를 선택하고, 유효성을 검증한 후 조회합니다.
+ * 날짜 순서 검증 및 에러 메시지 표시 기능을 포함합니다.
+ */
 const DateRangePicker = ({ value, onChange }: DateRangePickerProps) => {
+  /**
+   * ISO 8601 문자열을 Date 객체로 변환
+   * 변환 실패 시 undefined 반환
+   */
   const parseDate = (dateStr: string): Date | undefined => {
     if (!dateStr) return undefined
     try {
@@ -28,11 +38,13 @@ const DateRangePicker = ({ value, onChange }: DateRangePickerProps) => {
   }, [value.from, value.to])
 
   const handleApply = () => {
+    // 날짜 미선택 검증
     if (!fromDate || !toDate) {
       setError('날짜를 선택해주세요')
       return
     }
 
+    // 날짜 순서 검증: 시작일이 종료일보다 늦으면 에러
     if (fromDate > toDate) {
       setError('시작 날짜가 종료 날짜보다 늦을 수 없습니다')
       return

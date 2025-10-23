@@ -21,7 +21,14 @@ interface CustomerTableProps {
   onCustomerClick: (customerId: number) => void
 }
 
+/**
+ * 고객 목록 테이블 컴포넌트
+ *
+ * 총 구매 금액 기준 정렬 기능을 제공합니다.
+ * 정렬 순서: 정렬 없음(ID순) → 내림차순 → 오름차순 → 정렬 없음
+ */
 const CustomerTable = ({ customers, sortBy, onSortChange, onCustomerClick }: CustomerTableProps) => {
+  
   const handleSortClick = () => {
     if (!sortBy) {
       onSortChange('desc')
