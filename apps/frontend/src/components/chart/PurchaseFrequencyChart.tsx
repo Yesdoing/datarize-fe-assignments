@@ -16,20 +16,18 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+
+
 const PurchaseFrequencyChart = () => {
-  const [dateRange, setDateRange] = useState<{ from: string; to: string }>({ from: '', to: '' })
+  const [dateRange, setDateRange] = useState<{ from: string; to: string }>({ from: '2024-07-01', to: '2024-07-31' })
 
   const { data, isLoading, error, refetch } = usePurchaseFrequency(
     dateRange.from && dateRange.to ? dateRange : {}
   )
 
-  const handleDateChange = (from: string, to: string) => {
-    setDateRange({ from, to })
-  }
-
   return (
     <div className="space-y-4">
-      <DateRangePicker onDateChange={handleDateChange} />
+      <DateRangePicker value={dateRange} onChange={setDateRange} />
       <Card>
         <CardHeader>
           <CardTitle>구매 빈도 분석</CardTitle>

@@ -29,7 +29,7 @@ export function DatePicker({ date, setDate, placeholder = "날짜를 선택해�
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} captionLayout="dropdown" onSelect={(date) => {
+        <Calendar mode="single" defaultMonth={date} selected={date} captionLayout="dropdown" onSelect={(date) => {
           setDate(date)
           setOpen(false)
         }} />

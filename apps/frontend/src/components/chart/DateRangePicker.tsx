@@ -1,22 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { DatePicker } from '@/components/ui/DatePicker'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 
 interface DateRangePickerProps {
-  onDateChange: (from: string, to: string) => void
-  defaultFromDate?: string
-  defaultToDate?: string
+  value: { from: string; to: string }
+  onChange: (value: { from: string; to: string }) => void
 }
 
-const DateRangePicker = ({
-  onDateChange,
-  defaultFromDate,
-  defaultToDate
-}: DateRangePickerProps) => {
-  const [fromDate, setFromDate] = useState<Date | undefined>(defaultFromDate ? new Date(defaultFromDate) : undefined)
-  const [toDate, setToDate] = useState<Date | undefined>(defaultToDate ? new Date(defaultToDate) : undefined)
+const DateRangePicker = ({ value, onChange }: DateRangePickerProps) => {
+  const parseDate = (dateStr: string): Date | undefined => {
+    if (!dateStr) return undefined
+    try {
+      return parseISO(dateStr)
+    } catch {
+      return undefined
+    }
+  }
+
+  const [fromDate, setFromDate] = useState<Date | undefined>(parseDate(value.from))
+  const [toDate, setToDate] = useState<Date | undefined>(parseDate(value.to))
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    setFromDate(parseDate(value.from))
+    setToDate(parseDate(value.to))
+  }, [value.from, value.to])
 
   const handleApply = () => {
     if (!fromDate || !toDate) {
@@ -32,14 +41,14 @@ const DateRangePicker = ({
     setError('')
     const fromString = format(fromDate, 'yyyy-MM-dd')
     const toString = format(toDate, 'yyyy-MM-dd')
-    onDateChange(fromString, toString)
+    onChange({ from: fromString, to: toString })
   }
 
   const handleReset = () => {
-    setFromDate(undefined)  
+    setFromDate(undefined)
     setToDate(undefined)
     setError('')
-    onDateChange('', '')
+    onChange({ from: '', to: '' })
   }
 
   return (
