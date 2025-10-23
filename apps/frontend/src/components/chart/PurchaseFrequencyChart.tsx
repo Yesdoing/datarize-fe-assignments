@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts'
 import { usePurchaseFrequency } from '@/hooks/usePurchaseFrequency'
+import { useQueryParams } from '@/hooks/useQueryParams'
 import DateRangePicker from '@/components/chart/DateRangePicker'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
@@ -21,19 +21,26 @@ const chartConfig = {
  * 가격대별 구매 빈도 차트 컴포넌트
  *
  * 날짜 범위를 선택하여 해당 기간의 가격대별 구매 빈도를 바 차트로 시각화합니다.
+ * URL 쿼리스트링과 동기화되어 URL 공유, 북마크, 뒤로가기를 지원합니다.
  * 로딩, 에러, 빈 데이터 상태를 모두 처리합니다.
  */
 const PurchaseFrequencyChart = () => {
-  // 기본값: 2024년 7월 전체 기간
-  const [dateRange, setDateRange] = useState<{ from: string; to: string }>({ from: '2024-07-01', to: '2024-07-31' })
+  const [params, setParams] = useQueryParams({
+    from: '2024-07-01',
+    to: '2024-07-31',
+  })
+
+  const handleDateRangeChange = (newRange: { from: string; to: string }) => {
+    setParams(newRange)
+  }
 
   const { data, isLoading, error, refetch } = usePurchaseFrequency(
-    dateRange.from && dateRange.to ? dateRange : {}
+    params.from && params.to ? params : {}
   )
 
   return (
     <div className="space-y-4">
-      <DateRangePicker value={dateRange} onChange={setDateRange} />
+      <DateRangePicker value={params} onChange={handleDateRangeChange} />
       <Card>
         <CardHeader>
           <CardTitle>구매 빈도 분석</CardTitle>

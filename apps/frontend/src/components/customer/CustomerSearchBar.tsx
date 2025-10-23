@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/Input'
 
 
 interface CustomerSearchBarProps {
+  value?: string
   onSearch: (name: string) => void
 }
 
@@ -14,12 +15,17 @@ interface CustomerSearchBarProps {
  * Debounce를 적용하여 입력 후 300ms 대기 후 검색을 실행합니다.
  * 이를 통해 타이핑 중 불필요한 API 호출을 방지합니다.
  */
-const CustomerSearchBar = ({ onSearch }: CustomerSearchBarProps) => {
-  const [input, setInput] = useState('')
+const CustomerSearchBar = ({ value = '', onSearch }: CustomerSearchBarProps) => {
+  const [input, setInput] = useState(value)
   const debouncedValue = useDebounce(input, 300)
 
   useEffect(() => {
+    setInput(value)
+  }, [value])
+
+  useEffect(() => {
     onSearch(debouncedValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue])
 
   return (
