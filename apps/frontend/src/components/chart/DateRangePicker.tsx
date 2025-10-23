@@ -38,9 +38,16 @@ const DateRangePicker = ({ value, onChange }: DateRangePickerProps) => {
   }, [value.from, value.to])
 
   const handleApply = () => {
-    // 날짜 미선택 검증
+    // 둘 다 없으면 전체 기간 조회
+    if (!fromDate && !toDate) {
+      setError('')
+      onChange({ from: '', to: '' })
+      return
+    }
+
+    // 하나만 선택된 경우 에러
     if (!fromDate || !toDate) {
-      setError('날짜를 선택해주세요')
+      setError('시작 날짜와 종료 날짜를 모두 선택해주세요')
       return
     }
 
