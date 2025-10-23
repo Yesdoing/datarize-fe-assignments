@@ -5,16 +5,19 @@ import { Calendar as CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/Calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover"
 import { Button } from "@/components/ui/Button"
+import { useState } from "react"
 
 interface DatePickerProps {
   date: Date | undefined
   setDate: (date: Date | undefined) => void
-  placeholder: string
+  placeholder?: string
 }
 
 export function DatePicker({ date, setDate, placeholder = "날짜를 선택해주세요." }: DatePickerProps) {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -26,7 +29,10 @@ export function DatePicker({ date, setDate, placeholder = "날짜를 선택해�
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={setDate} />
+        <Calendar mode="single" selected={date} captionLayout="dropdown" onSelect={(date) => {
+          setDate(date)
+          setOpen(false)
+        }} />
       </PopoverContent>
     </Popover>
   )
