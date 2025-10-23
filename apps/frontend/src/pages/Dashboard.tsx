@@ -1,4 +1,5 @@
 import PurchaseFrequencyChart from "@/components/chart/PurchaseFrequencyChart"
+import CustomerList from "@/components/customer/CustomerList"
 
 
 const Dashboard = () => {
@@ -14,6 +15,10 @@ const Dashboard = () => {
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">가격대별 구매 빈도</h2>
           <PurchaseFrequencyChart />
+        </section>
+        <section>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">고객 목록</h2>
+          <CustomerList />
         </section>
       </main>
     </div>
